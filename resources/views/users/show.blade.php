@@ -17,6 +17,17 @@
                 <li class="nav-item"><a href="#" class="nav-link">自分の投稿一覧</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">お気に入り投稿一覧</a></li>
             </ul>
+            @if(Auth::id() == $user->id)
+                {!! Form::open(['route' => 'posts.store']) !!}
+                    <div class="form-group">
+                        {!! Form::textarea('content', old('content'), ['class' => 'form-control', 'rows' => '2']) !!}
+                        {!! Form::submit('投稿',['class' => 'btn btn-primary btn-block']) !!}
+                    </div>
+                {!! Form::close() !!}
+            @endif
+            @if(count($posts) > 0)
+                @include('posts.posts', ['posts' => $posts])
+            @endif
         </div>
     </div>
 @endsection
