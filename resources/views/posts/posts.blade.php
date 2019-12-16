@@ -9,12 +9,16 @@
                 <div>
                     <p class="mb-0">{!! nl2br(e($post->content)) !!}</p>
                 </div>
-                <div>
-                    @if(Auth::id() == $post->user_id)
-                        {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'delete']) !!}
-                            {!!Form::submit('削除', ['class' => 'btn btn-danger btn-sm']) !!}
-                        {!! Form::close() !!}
-                    @endif
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        @if(Auth::id() == $post->user_id)
+                            {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'delete']) !!}
+                                {!!Form::submit('削除', ['class' => 'btn btn-danger btn-sm mr-1']) !!}
+                            {!! Form::close() !!}
+                        @endif
+                        
+                        @include('favorites.favorite_button', ['posts' => $posts])
+                    </div>
                 </div>
             </div>
         </li>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Post;
+
 class PostsController extends Controller
 {
     public function index()
@@ -11,14 +13,25 @@ class PostsController extends Controller
         $data = [];
         if (\Auth::check()){
             $user = \Auth::user();
-            $posts = $user->posts()->orderBy('created_at', 'desc')->paginate(10);
-            
+            $posts = Post::orderBy('id', 'desc')->paginate(10);
             $data = [
                 'user' => $user,
                 'posts' => $posts,
             ];
         }
         return view('welcome', $data);
+    }
+    
+    public function top()
+    {
+        $user = \Auth::user();
+        $posts = Post::orderBy('id', 'desc')->paginate(10);
+        $data = [
+            'user' => $user,
+            'posts' => $posts,
+        ];
+        
+        return view('posts.top', $data);
     }
     
     public function store(Request $request)
@@ -45,4 +58,12 @@ class PostsController extends Controller
         
         return back();
     }
+    
+    public function create()
+    {
+        $post = new Post;
+        
+        return view('posts.create', ['post' => $post]);
+    }
+    
 }

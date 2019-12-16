@@ -10,7 +10,10 @@
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 @if(Auth::check())
-                    <li class="nav-item">{!! link_to_route('users.index', 'Users', [], ['class' => 'nav-link']) !!}</li>
+                    <li class="nav-item">{!! link_to_route('users.index', 'メンバーズ一覧', [], ['class' => 'nav-link']) !!}</li>
+                    <li class="nav-item">{!! link_to_route('posts.top', '投稿一覧', [], ['class' => 'nav-link']) !!}</li>
+                    <li class="nav-item">{!! link_to_route('posts.create', '投稿する', [], ['class' => 'nav-link']) !!}</li>
+                    
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                         <ul class="dropdown-menu dropdown-menu-right">

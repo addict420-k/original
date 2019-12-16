@@ -22,6 +22,17 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 Route::group(['middleware' => ['auth']], function(){
     Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
-    Route::resource('posts', 'PostsController', ['only' => ['store', 'destroy']]);
+    
+    Route::group(['prefix' => 'users/{id}'],function(){
+       Route::get('favorites', 'UsersController@favorites')->name('users.favorites');
+    });
+    Route::group(['prefix' => 'posts/{id}'], function(){
+       Route::post('favorite', 'FavoritesController@store')->name('favorites.favorite');
+       Route::delete('unfavorite', 'FavoritesController@destroy')->name('favorites.unfavorite');
+    });
+    Route::resource('posts', 'PostsController');
+    Route::get('posts', 'PostsController@top')->name('posts.top');
+    
+    Route::get('/profile', 'ProfileController@index');
+    Route::post('/profile', 'ProfileController@store');
 });
-

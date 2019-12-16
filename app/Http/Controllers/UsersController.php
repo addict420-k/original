@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\Post;
 
 class UsersController extends Controller
 {
@@ -25,5 +26,18 @@ class UsersController extends Controller
             'user' => $user,
             'posts' => $posts,
         ]);
+    }
+    
+    public function favorites($id)
+    {
+        $user = User::find($id);
+        $favorites = $user->favorites()->paginate(10);
+        
+        $data = [
+            'user' => $user,
+            'favorites' => $favorites,
+        ];
+        
+        return view('users.favorites', $data);
     }
 }
