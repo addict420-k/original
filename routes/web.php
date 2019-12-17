@@ -32,7 +32,4 @@ Route::group(['middleware' => ['auth']], function(){
     });
     Route::resource('posts', 'PostsController');
     Route::get('posts', 'PostsController@top')->name('posts.top');
-    
-    Route::get('/profile', 'ProfileController@index');
-    Route::post('/profile', 'ProfileController@store');
 });

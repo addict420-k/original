@@ -40,4 +40,20 @@ class UsersController extends Controller
         
         return view('users.favorites', $data);
     }
+    
+    public function image(Request $request, User $user)
+    {
+        $this->validate($request,[
+            'originalImg' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        
+        $originalImg = $request->user_img;
+        
+        if($originalImg->isValid()){
+            $filePath = $originalImg->store('public');
+            $user->image = str_replace('public/', '', $filePath);
+            $user->save();
+            return redirect("/user/{$user->id}")->with('user', $user);
+        }
+    }
 }

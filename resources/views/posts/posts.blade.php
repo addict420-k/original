@@ -1,6 +1,6 @@
 <ul class="list-unstyled">
     @foreach($posts as $post)
-        <li class="media mb-3">
+ <li class="media mb-3">
             <img class="mr-2 rounded" src="{{ Gravatar::src($post->user->email, 50) }}" alt="">
             <div class="media-body">
                 <div>
