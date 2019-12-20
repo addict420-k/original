@@ -37,5 +37,5 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/profile-image', 'UserImageController@store')->name('profileIimage.store');
     Route::get('/post-image', 'PostImageController@index')->name('postImage.get');
     Route::post('/post-image','PostImageController@store')->name('postImage.store');
-    Route::post('/kinentime', 'CarbonController@store')->name('post.carbon');
+    Route::post('/start-time', 'UsersController@start_time')->name('post.start_time');
 });

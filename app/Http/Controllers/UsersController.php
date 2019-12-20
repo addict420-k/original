@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\Post;
+use Carbon\Carbon;
 
 class UsersController extends Controller
 {
@@ -39,6 +40,20 @@ class UsersController extends Controller
         ];
         
         return view('users.favorites', $data);
+    }
+    
+    public function start_time()
+    {
+        $user = \Auth::user();
+        
+        $now = \Carbon\Carbon::now();
+        
+        $user->start_time = $now;
+        
+        $user->save();
+        
+        return back();
+        
     }
     
 
