@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'PostsController@index');
+Route::get('/carbon', 'CarbonController@getIndex');
 
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
 Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
@@ -32,4 +33,9 @@ Route::group(['middleware' => ['auth']], function(){
     });
     Route::resource('posts', 'PostsController');
     Route::get('posts', 'PostsController@top')->name('posts.top');
+    Route::get('/profile-image', 'UserImageController@index')->name('profileImage.get');
+    Route::post('/profile-image', 'UserImageController@store')->name('profileIimage.store');
+    Route::get('/post-image', 'PostImageController@index')->name('postImage.get');
+    Route::post('/post-image','PostImageController@store')->name('postImage.store');
+    Route::post('/kinentime', 'CarbonController@store')->name('post.carbon');
 });

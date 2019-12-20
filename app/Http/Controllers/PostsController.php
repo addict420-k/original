@@ -34,16 +34,21 @@ class PostsController extends Controller
         return view('posts.top', $data);
     }
     
-    public function store(Request $request)
+public function store(Request $request)
     {
         $this->validate($request, [
-           'content' => 'required|max:191', 
+           'content' => 'required|max:191',
+           'post_image' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-        
+        $originalPostImg = $request->post_image;
+        if($originalPostImg->isValid()){
+            $filePath = $originalPostImg->store('public');
+            $post_image = basename($filePath);
+        }
         $request->user()->posts()->create([
             'content' => $request->content,
+            'post_image' => $post_image,
         ]);
-        
         return back();
     }
     
