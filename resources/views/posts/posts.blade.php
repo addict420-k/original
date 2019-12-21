@@ -5,7 +5,7 @@
             @if($post->user->image == null)
               <img class="mr-2 rounded" src="{{ Gravatar::src($post->user->email, 50) }}" alt="" style="max-height:50px">
             @else
-              <img class="mr-2 rounded" src="/storage/{{ $post->user->image}}" alt="" style="max-height:50px">
+              <img class="mr-2 rounded" src="{{ $post->user->image }}" alt="" style="max-height:50px">
             @endif
             
             <div class="media-body">
@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     <p class="mb-0">{!! nl2br(e($post->content)) !!}</p>
-                    <img  style="max-height:150px" class="rounded img-fluid" src="/storage/{{$post->post_image}}" alt="">
+                    <img  style="max-height:150px" class="rounded img-fluid" src="{{$post->post_image}}" alt="">
                 </div>
                 <div class="btn-toolbar">
                     <div class="btn-group">

@@ -6,7 +6,7 @@
 @if($user->image == null)
   <img class="mr-2 rounded" src="{{ Gravatar::src($user->email, 50) }}" alt="" style="max-height:50px">
 @else
-  <img class="mr-2 rounded" src="/storage/{{ $user->image}}" alt="" style="max-height:50px">
+  <img class="mr-2 rounded" src="{{ $user->image}}" alt="" style="max-height:50px">
 @endif
        
        

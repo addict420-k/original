@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Post;
+use Storage;
 
 class PostsController extends Controller
 {
@@ -36,15 +37,28 @@ class PostsController extends Controller
     
 public function store(Request $request)
     {
+        
+      
         $this->validate($request, [
            'content' => 'required|max:191',
            'post_image' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+        
+        
         $originalPostImg = $request->post_image;
-        if($originalPostImg->isValid()){
-            $filePath = $originalPostImg->store('public');
-            $post_image = basename($filePath);
+        
+        if($originalPostImg == null)
+        {
+            $post_image = null;   
+    
         }
+        elseif($originalPostImg->isValid())
+        {
+            $path = Storage::disk('s3')->putFile('myprefix',$originalPostImg,'public');
+            $post_image = Storage::disk('s3')->url($path);
+
+        }
+        
         $request->user()->posts()->create([
             'content' => $request->content,
             'post_image' => $post_image,

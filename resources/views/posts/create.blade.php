@@ -9,7 +9,7 @@
         {!! Form::submit('投稿',['class' => 'btn btn-primary btn-block']) !!}
     </div>
     <div>気持ちだけでも発散しましょう。</div>
-{!! Form::close() !!}
+    {!! Form::close() !!}
 @endsection
 
 
