@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::group(['prefix' => 'posts/{id}'], function(){
        Route::post('favorite', 'FavoritesController@store')->name('favorites.favorite');
        Route::delete('unfavorite', 'FavoritesController@destroy')->name('favorites.unfavorite');
+       Route::get('edit', 'PostsController@edit')->name('posts.edit');
+       Route::put('edit', 'PostsController@update')->name('posts.update');
     });
     Route::resource('posts', 'PostsController');
     Route::get('posts', 'PostsController@top')->name('posts.top');

@@ -4,7 +4,19 @@
     @if(Auth::check())
         <div class="row">
             <aside class="col-sm-4">
-                @include('users.card', ['user' => $user])
+            @include('users.card', ['user' => $user])
+                @if(Auth::id() == $user->id)
+                {!! link_to_route('profileImage.get', '画像登録・変更', [], ['class' => 'btn btn-lg btn-primary']) !!}
+            
+                <form method="POST" action="/start-time">
+                    {{ csrf_field() }}
+                <input type="submit" value="禁煙スタート・禁煙リセット">
+                @endif
+            
+                @if($user->start_time != null)
+                    <div>禁煙開始日{{ $user->start_time}}</div>
+                    <div>禁煙開始から{{ $user->start_time->diffInDays(\Carbon\Carbon::now()) }}日経過</div>
+                @endif
             </aside>
             <div class="col-sm-8">
                 @if(Auth::id() == $user->id)

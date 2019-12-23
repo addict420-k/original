@@ -16,12 +16,13 @@
                     <p class="mb-0">{!! nl2br(e($post->content)) !!}</p>
                     <img  style="max-height:150px" class="rounded img-fluid" src="{{$post->post_image}}" alt="">
                 </div>
-                <div class="btn-toolbar">
+                <div class="btn-toolbar mt-1">
                     <div class="btn-group">
                         @if(Auth::id() == $post->user_id)
                             {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'delete']) !!}
                                 {!!Form::submit('削除', ['class' => 'btn btn-danger btn-sm mr-1']) !!}
                             {!! Form::close() !!}
+                            {!! link_to_route('posts.edit', 'このメッセージを編集', ['id' => $post->id], ['class' => 'btn btn-dark btn-sm mr-3']) !!}
                         @endif
                         
                         @include('favorites.favorite_button', ['posts' => $posts])

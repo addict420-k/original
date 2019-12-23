@@ -63,7 +63,17 @@ public function store(Request $request)
             'content' => $request->content,
             'post_image' => $post_image,
         ]);
-        return back();
+        
+        $user = \Auth::user();
+        $posts = Post::orderBy('id', 'desc')->paginate(10);
+        $data = [
+            'user' => $user,
+            'posts' => $posts,
+        ];
+        
+        return view('posts.top', $data);
+        
+        
     }
     
     public function destroy($id)
@@ -84,5 +94,53 @@ public function store(Request $request)
         
         return view('posts.create', ['post' => $post]);
     }
-    
+    public function edit($id)
+    {
+       
+        $post = Post::find($id);
+        
+       
+        
+        return view('posts.edit',[
+            'post' => $post,
+        ]);
+    }
+    public function update(Request $request, $id)
+    {
+        $post = Post::find($id);
+        
+        $this->validate($request, [
+           'content' => 'required|max:191',
+           'post_image' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        
+        
+        $originalPostImg = $request->post_image;
+        
+        
+        
+        if($originalPostImg == null)
+        {
+            $post_image = null;   
+        }
+        elseif($originalPostImg->isValid())
+        {
+            $path = Storage::disk('s3')->putFile('myprefix',$originalPostImg,'public');
+            $post_image = Storage::disk('s3')->url($path);
+        }
+        
+        $post->content = $request->content;
+        $post->post_image = $post_image;
+        $post->save();
+        
+        $user = \Auth::user();
+        $posts = Post::orderBy('id', 'desc')->paginate(10);
+        $data = [
+            'user' => $user,
+            'posts' => $posts,
+        ];
+        
+        return view('posts.top', $data);
+    }
 }
+
